@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InvestmentService } from '../investment.service';
+import { AnnualData } from '../investment.model';
 
 @Component({
   selector: 'app-user-input',
@@ -17,7 +18,7 @@ export class UserInputComponent {
   duration: number = 0;
 
   onFormSubmit() {
-    const investmentResult = this.calculateInvestmentResults();
+    const investmentResult: AnnualData[] = this.calculateInvestmentResults();
     console.log(investmentResult);
   }
 
