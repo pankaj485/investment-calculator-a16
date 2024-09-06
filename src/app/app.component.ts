@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { UserInputComponent } from './user-input/user-input.component';
 import { InvestmentResultsComponent } from './investment-results/investment-results.component';
@@ -13,9 +13,8 @@ import { AnnualData } from './investment.model';
 })
 export class AppComponent {
   constructor(private investmentService: InvestmentService) {}
-  investmentResult: AnnualData[] = [];
+  investmentResult: WritableSignal<AnnualData[]> = signal([]);
   getAnnualData() {
     this.investmentResult = this.investmentService.getInvestMentResults();
-    console.log('annual data', this.investmentResult);
   }
 }

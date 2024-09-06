@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { computed, Injectable, signal, WritableSignal } from '@angular/core';
 import { AnnualData, InvestmentInput } from './investment.model';
 
 @Injectable({
@@ -8,7 +8,10 @@ export class InvestmentService {
   constructor() {}
 
   annualData: AnnualData[] = [];
-  calculateInvestmentResults(data: InvestmentInput): AnnualData[] {
+  annualDataSignal: WritableSignal<AnnualData[]> = signal([]);
+  calculateInvestmentResults(
+    data: InvestmentInput
+  ): WritableSignal<AnnualData[]> {
     const { annualInvestment, duration, expectedReturn, initialInvestment } =
       data;
     this.annualData = [];
@@ -31,10 +34,11 @@ export class InvestmentService {
       });
     }
 
-    return this.annualData;
+    this.annualDataSignal.set(this.annualData);
+    return this.annualDataSignal;
   }
 
-  getInvestMentResults(): AnnualData[] {
-    return this.annualData;
+  getInvestMentResults(): WritableSignal<AnnualData[]> {
+    return this.annualDataSignal;
   }
 }

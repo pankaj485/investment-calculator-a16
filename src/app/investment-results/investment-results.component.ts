@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, WritableSignal } from '@angular/core';
 import { AnnualData } from '../investment.model';
 import { CurrencyPipe } from '@angular/common';
 
@@ -10,6 +10,5 @@ import { CurrencyPipe } from '@angular/common';
   styleUrl: './investment-results.component.css',
 })
 export class InvestmentResultsComponent {
-  @Input() investmentResult!: AnnualData[];
-  ngOnInit() {}
+  @Input() investmentResult!: WritableSignal<AnnualData[]>;
 }
