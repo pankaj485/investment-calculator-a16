@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InvestmentService } from '../investment.service';
-import { AnnualData } from '../investment.model';
 
 @Component({
   selector: 'app-user-input',
@@ -11,23 +10,24 @@ import { AnnualData } from '../investment.model';
   styleUrl: './user-input.component.css',
 })
 export class UserInputComponent {
+  @Output() calculateResult = new EventEmitter<void>();
   constructor(private investmentService: InvestmentService) {}
-  initialInvestment: number = 0;
-  annualInvestment: number = 0;
-  expectedReturn: number = 0;
-  duration: number = 0;
+  initialInvestment: string = '1000';
+  annualInvestment: string = '200';
+  expectedReturn: string = '5';
+  duration: string = '10';
 
   onFormSubmit() {
-    const investmentResult: AnnualData[] = this.calculateInvestmentResults();
-    console.log(investmentResult);
+    this.calculateInvestmentResults();
   }
 
   calculateInvestmentResults() {
-    return this.investmentService.calculateInvestmentResults({
-      annualInvestment: this.annualInvestment,
-      initialInvestment: this.initialInvestment,
-      duration: this.duration,
-      expectedReturn: this.expectedReturn,
+    this.investmentService.calculateInvestmentResults({
+      annualInvestment: Number(this.annualInvestment),
+      initialInvestment: Number(this.initialInvestment),
+      duration: Number(this.duration),
+      expectedReturn: Number(this.expectedReturn),
     });
+    this.calculateResult.emit();
   }
 }

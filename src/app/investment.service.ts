@@ -7,10 +7,11 @@ import { AnnualData, InvestmentInput } from './investment.model';
 export class InvestmentService {
   constructor() {}
 
+  annualData: AnnualData[] = [];
   calculateInvestmentResults(data: InvestmentInput): AnnualData[] {
     const { annualInvestment, duration, expectedReturn, initialInvestment } =
       data;
-    const annualData: AnnualData[] = [];
+    this.annualData = [];
     let investmentValue = initialInvestment;
 
     for (let i = 0; i < duration; i++) {
@@ -20,7 +21,7 @@ export class InvestmentService {
       const totalInterest =
         investmentValue - annualInvestment * year - initialInvestment;
 
-      annualData.push({
+      this.annualData.push({
         year: year,
         interest: interestEarnedInYear,
         valueEndOfYear: investmentValue,
@@ -30,6 +31,10 @@ export class InvestmentService {
       });
     }
 
-    return annualData;
+    return this.annualData;
+  }
+
+  getInvestMentResults(): AnnualData[] {
+    return this.annualData;
   }
 }
