@@ -1,7 +1,7 @@
 import {
   Component,
-  EventEmitter,
-  Output,
+  output,
+  OutputEmitterRef,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -16,7 +16,7 @@ import { InvestmentService } from '../investment.service';
   styleUrl: './user-input.component.css',
 })
 export class UserInputComponent {
-  @Output() calculateResult = new EventEmitter<void>();
+  calculateResult: OutputEmitterRef<void> = output<void>();
   constructor(private investmentService: InvestmentService) {}
   initialInvestment: WritableSignal<string> = signal('1000');
   annualInvestment: WritableSignal<string> = signal('200');
